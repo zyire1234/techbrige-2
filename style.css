@@ -136,3 +136,61 @@ h3 { margin: 0 0 10px; font-size: 1.4rem; }
   .bridge svg { animation: none; clip-path: none; }
   * { transition: none !important; }
 }
+
+/* ===== Task 2: Programs page ===== */
+nav a[aria-current="page"] { border-color: var(--green); }
+.more { margin: 32px 0 0; }
+
+.page-hero { padding: 72px 0 64px; }
+.page-hero h1 { max-width: 16ch; font-size: clamp(2.4rem, 6vw, 4.2rem); }
+.page-hero .actions { margin-top: 4px; }
+
+/* Program heading row: text on the left, one-line summary card on the right */
+.program-head { display: grid; grid-template-columns: 1.1fr 1fr; gap: 48px; align-items: stretch; margin-bottom: 52px; }
+.program-head p { margin: 0 0 14px; max-width: 52ch; }
+.program-head .fit { margin: 18px 0 0; padding-left: 16px; border-left: 4px solid var(--green); }
+.program-head .program { display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+.program-head .program h3 { font-size: 1.6rem; line-height: 1.25; }
+
+.skills-title { margin: 0 0 6px; color: var(--navy); font-size: 1.15rem; }
+
+/* Skill path: a trace that echoes the homepage "bridge" line */
+.path { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+.path li { position: relative; padding-top: 34px; }
+.path li::before {
+  content: ""; position: absolute; top: 0; left: 0; z-index: 1;
+  width: 16px; height: 16px; border-radius: 50%; background: var(--navy);
+}
+.path li:last-child::before { background: var(--green); }
+.path li::after {
+  content: ""; position: absolute; top: 6.5px; left: 8px;
+  width: calc(100% + 20px); height: 3px; background: var(--green);
+}
+.path li:last-child::after { display: none; }
+.path h4 { margin: 0 0 6px; font-size: 1.02rem; line-height: 1.3; color: var(--navy); }
+.path p { margin: 0; font-size: .93rem; }
+
+/* Which program is right for you */
+.choose { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.choose .program { min-height: 0; }
+.choose ul { margin: 0 0 26px; padding-left: 20px; }
+.choose li { margin-bottom: 6px; }
+
+@media (max-width: 860px) {
+  .page-hero { padding: 56px 0 48px; }
+  .program-head, .choose { grid-template-columns: 1fr; gap: 28px; }
+  .program-head { margin-bottom: 40px; }
+  .path { grid-template-columns: 1fr; gap: 0; }
+  .path li { padding: 0 0 26px 40px; }
+  .path li::before { top: 4px; }
+  .path li::after { top: 14px; left: 6.5px; width: 3px; height: 100%; }
+}
+
+@media (max-width: 640px) {
+  .page-hero { padding: 44px 0 40px; }
+  .choose .program { padding: 30px 24px; }
+  .choose .btn { width: 100%; text-align: center; }
+}
+
+/* Footer fix: keep the copyright line aligned with the page container */
+.site-footer .copy { margin-inline: auto; }
