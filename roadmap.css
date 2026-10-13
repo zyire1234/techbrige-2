@@ -1,0 +1,32 @@
+/* Task 4: Interactive Internship Roadmap (extra styles; the rest reuses style.css) */
+.track-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-bottom: 36px; }
+.track-picker h2 { margin: 0; font-size: 1.5rem; }
+.track-switch { display: inline-flex; gap: 0; padding: 4px; border: 2px solid var(--head); border-radius: var(--radius); background: var(--surface); }
+.track-btn {
+  padding: 12px 24px; border: 0; border-radius: 2px; background: transparent; color: var(--head);
+  font: inherit; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; cursor: pointer;
+  transition: background .2s, color .2s;
+}
+.track-btn:hover { background: var(--tint); }
+.track-btn.active { background: var(--head); color: var(--on-head); }
+
+.viewing {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; margin-bottom: 8px;
+  padding: 18px 22px; border: 1px solid var(--line); border-left: 6px solid var(--green); border-radius: var(--radius); background: var(--surface);
+}
+.viewing .small { font-size: .9rem; font-weight: 700; color: var(--muted); }
+.viewing strong { font-family: var(--serif); font-size: 1.6rem; color: var(--head); text-transform: uppercase; letter-spacing: .02em; }
+.viewing .badge { margin-left: auto; padding: 4px 12px; border-radius: 99px; background: var(--green); color: #fff; font-size: .85rem; font-weight: 800; }
+
+#timeline::before { width: 100%; animation: none; }
+.progress-note { margin: 0 0 40px; color: var(--muted); }
+
+#roadmap-list .stage-card { animation: swap .35s ease-out; }
+@keyframes swap { from { opacity: 0; translate: 0 10px; } to { opacity: 1; translate: 0 0; } }
+
+@media (max-width: 640px) {
+  .track-switch { width: 100%; }
+  .track-btn { flex: 1; padding: 14px 8px; font-size: .85rem; }
+  .viewing .badge { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) { #roadmap-list .stage-card { animation: none; } }
