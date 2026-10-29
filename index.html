@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Search | TechBridge</title>
-  <meta name="description" content="Search TechBridge internship tasks and challenges in one place.">
+  <title>TechBridge Intern Management Platform | Bridging Learning to Real-World Experience</title>
+  <meta name="description" content="The TechBridge Intern Management Platform helps interns track progress, manage tasks, explore challenges and build practical experience.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <meta property="og:title" content="Search | TechBridge">
-  <meta property="og:description" content="Search TechBridge internship tasks and challenges.">
+  <meta property="og:title" content="TechBridge | Bridging Learning to Real-World Experience">
+  <meta property="og:description" content="30-day practical internship in Data Analytics and Web Development.">
   <meta property="og:image" content="images/techbridge-logo.png">
   <meta name="theme-color" content="#0d004d">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,17 +15,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="challenges.css">
-  <link rel="stylesheet" href="dashboard.css">
-  <link rel="stylesheet" href="search.css">
 </head>
 <body>
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="index.html" class="brand"><img src="images/techbridge-logo.png" alt="TechBridge logo" width="558" height="115"></a>
+      <a href="#top" class="brand"><img src="images/techbridge-logo.png" alt="TechBridge logo" width="558" height="115"></a>
       <nav aria-label="Main navigation">
-        <a href="index.html#about">About</a>
+        <a href="#about">About</a>
         <a href="programs.html">Programs</a>
         <a href="internship-tasks.html">Tasks</a>
         <a href="roadmap.html">Roadmap</a>
@@ -33,7 +30,7 @@
         <a href="dashboard.html">Dashboard</a>
         <a href="#contact">Contact</a>
       </nav>
-      <a class="search-link" href="search.html" aria-current="page" aria-label="Search tasks and challenges"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
+      <a class="search-link" href="search.html" aria-label="Search tasks and challenges"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></a>
       <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
         <svg class="ico-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>
         <svg class="ico-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.2A8 8 0 0 1 9.8 4 8 8 0 1 0 20 14.2z"/></svg>
@@ -44,48 +41,122 @@
 
   <main id="top">
 
-    <section class="page-hero">
+    <section class="hero">
       <div class="wrap">
-        <p class="org">Search</p>
-        <h1>Search tasks and challenges</h1>
-        <p class="lead">Type a keyword such as JavaScript, SQL, dashboard or API to find matching internship tasks and challenges in one place.</p>
+        <p class="org">TechBridge by Baselink Services Limited</p>
+        <h1>Welcome to the TechBridge Intern Management Platform</h1>
+        <p class="lead">One place to run your 30-day practical internship in Data Analytics or Web Development: follow your progress, work through the tasks, practise with challenges and see what you have completed.</p>
+        <div class="actions">
+          <a class="btn btn-green" href="dashboard.html">View Dashboard</a>
+          <a class="btn btn-outline" href="challenges.html">Explore Challenges</a>
+        </div>
+        <div class="bridge" aria-hidden="true">
+          <span>Learning</span>
+          <svg viewBox="0 0 600 60" preserveAspectRatio="none">
+            <path class="trace" d="M8 30 H200 V10 H320 V50 H430 V30 H592" />
+            <circle cx="8" cy="30" r="6" />
+            <circle cx="592" cy="30" r="6" class="end" />
+          </svg>
+          <span>Real-world experience</span>
+        </div>
       </div>
     </section>
 
-    <section class="section tint" aria-labelledby="results-title">
+    <section id="platform" class="section tint" aria-labelledby="platform-title">
       <div class="wrap">
+        <h2 id="platform-title">What the platform helps you do</h2>
+        <p class="section-intro">The platform connects your dashboard, your tasks and the Challenge Hub to one backend, so everything you do stays in sync.</p>
+        <ul class="features">
+          <li class="feature">
+            <span class="feature-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>
+            <h3>Track your progress</h3>
+            <p>See how many of the 8 tasks you have finished, with a live progress bar.</p>
+            <a href="dashboard.html#progress">Open progress <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="feature">
+            <span class="feature-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></span>
+            <h3>Access your tasks</h3>
+            <p>Open any task for its objective, tools and what you need to deliver.</p>
+            <a href="dashboard.html#tracker">Open task tracker <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="feature">
+            <span class="feature-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.7 6.7 19.6l1.1-6L3.4 9.4l6-.8z"/></svg></span>
+            <h3>Explore challenges</h3>
+            <p>Practise with Data Analytics and Web Development challenges, filtered your way.</p>
+            <a href="challenges.html">Open Challenge Hub <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="feature">
+            <span class="feature-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg></span>
+            <h3>Monitor completed work</h3>
+            <p>Mark tasks as completed and watch your totals update straight away.</p>
+            <a href="dashboard.html#tracker">See completed tasks <span aria-hidden="true">&rarr;</span></a>
+          </li>
+          <li class="feature">
+            <span class="feature-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg></span>
+            <h3>Build practical experience</h3>
+            <p>Follow the roadmap from your first page to a finished, deployed project.</p>
+            <a href="roadmap.html">View the roadmap <span aria-hidden="true">&rarr;</span></a>
+          </li>
+        </ul>
+        <p class="more"><a class="btn btn-green" href="dashboard.html">Get Started</a> <a class="btn btn-outline" href="search.html">Search tasks and challenges</a></p>
+      </div>
+    </section>
 
-        <form class="search-form" id="search-form" role="search" autocomplete="off">
-          <label class="filter-label" for="q">Search</label>
-          <div class="search-row">
-            <input type="search" id="q" name="q" placeholder="Try JavaScript" maxlength="100" autofocus>
-            <button type="submit" class="btn btn-green">Search</button>
-          </div>
-          <p class="suggest" id="suggest">
-            <span>Try:</span>
-            <button type="button" class="chip" data-term="JavaScript">JavaScript</button>
-            <button type="button" class="chip" data-term="SQL">SQL</button>
-            <button type="button" class="chip" data-term="Dashboard">Dashboard</button>
-            <button type="button" class="chip" data-term="API">API</button>
-          </p>
-        </form>
+    <section id="about" class="section">
+      <div class="wrap split">
+        <div>
+          <h2>What TechBridge is</h2>
+          <p>TechBridge is a learning and internship initiative from Baselink Services Limited. Its purpose is simple: help learners connect what they study with the practical work they will meet in the real world.</p>
+        </div>
+        <div>
+          <h2>Who it is for</h2>
+          <p>The programs are for learners and aspiring interns who want hands-on experience in Data Analytics or Web Development, whether you are just starting out or ready to put your skills to work.</p>
+        </div>
+      </div>
+    </section>
 
-        <h2 id="results-title" class="sr-only">Search results</h2>
-        <p class="results-line" id="summary" aria-live="polite"></p>
+    <section id="programs" class="section tint">
+      <div class="wrap">
+        <h2>Programs available now</h2>
+        <p class="section-intro">Choose the track that fits your goals. Both are delivered through the 30-day practical internship.</p>
+        <div class="programs">
+          <article class="program dark">
+            <h3>Data Analytics</h3>
+            <p>Learn to work with data and turn it into useful insights through practical, project-based tasks.</p>
+          </article>
+          <article class="program light">
+            <h3>Web Development</h3>
+            <p>Learn to plan, build and style real web pages through hands-on projects.</p>
+          </article>
+        </div>
+        <p class="more"><a class="btn btn-outline" href="programs.html">Explore the programs</a></p>
+      </div>
+    </section>
 
-        <div class="state-box" id="state" role="status" aria-live="polite" hidden></div>
+    <section id="internship" class="section">
+      <div class="wrap split">
+        <div>
+          <h2>The 30-day practical internship</h2>
+          <p>Instead of only reading about skills, you practise them. The internship is project-based, so you learn by building things you can be proud of.</p>
+          <p class="more"><a class="btn btn-outline" href="internship-tasks.html">See the 8 internship tasks</a></p>
+        </div>
+        <ul class="benefits">
+          <li><strong>Learn by doing.</strong> Practical tasks and projects replace passive lessons.</li>
+          <li><strong>Possible recommendation letter.</strong> Interns who participate successfully and perform well may receive a recommendation letter.</li>
+          <li><strong>Two tracks.</strong> Pick Data Analytics or Web Development.</li>
+          <li><strong>A community behind you.</strong> Connect with other learners on WhatsApp.</li>
+        </ul>
+      </div>
+    </section>
 
-        <section id="task-results" class="result-group" aria-labelledby="task-heading" hidden>
-          <h3 id="task-heading">Tasks <span class="chip-n" id="task-n"></span></h3>
-          <div class="task-grid" id="task-list"></div>
-        </section>
-
-        <section id="challenge-results" class="result-group" aria-labelledby="challenge-heading" hidden>
-          <h3 id="challenge-heading">Challenges <span class="chip-n" id="challenge-n"></span></h3>
-          <div class="cards" id="challenge-list"></div>
-        </section>
-
-        <noscript><p>Please enable JavaScript to use search.</p></noscript>
+    <section id="community" class="cta">
+      <div class="wrap">
+        <h2>Ready to start?</h2>
+        <p>Send in your application, then join the community to meet other TechBridge learners.</p>
+        <div class="actions center">
+          <a class="btn btn-green" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Fill out the application form</a>
+          <a class="btn btn-white" href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener">Join the WhatsApp community</a>
+        </div>
       </div>
     </section>
 
@@ -111,7 +182,5 @@
   </footer>
 
   <script src="theme.js" defer></script>
-  <script src="api.js" defer></script>
-  <script src="search.js" defer></script>
 </body>
 </html>
