@@ -1,30 +1,50 @@
-# TechBridge Internship Website
+# TechBridge Intern Management Platform
 
-Static TechBridge website (Tasks 1 to 6) plus the **Task 7 Task Management API**, which powers the Intern Dashboard.
+A complete internship platform for TechBridge interns: a professional homepage, an Intern Dashboard with live progress tracking, a Challenge Hub, site-wide search, and a Node.js + Express REST API behind it all.
 
-```
-Intern Dashboard (dashboard.html + dashboard.js)
-        |  fetch()
-        v
-REST API  ->  Node.js + Express (backend/server.js)
-        |
-        v
-Task data (backend/data/tasks.json)
-```
+This project combines the work from Task 5 (Challenge Hub), Task 6 (Intern Dashboard) and Task 7 (Task Management API) into one working platform.
 
-## Project structure
+## Project description
 
-```
-/                       website files (index.html, dashboard.html, dashboard.js, dashboard.css, ...)
-backend/
-├── server.js           Express server and API endpoints
-├── package.json
-├── package-lock.json
-└── data/
-    └── tasks.json      the 8 internship tasks
-```
+Interns use the platform to:
 
-## Run it locally
+- **Track their internship progress** with a progress bar, completed and remaining counts
+- **Access all 8 internship tasks** and open each one for full details
+- **Update task status** (Not Started, In Progress, Completed) and see the totals change straight away
+- **Explore challenges** in Data Analytics and Web Development, filtered by track and difficulty
+- **Search** tasks and challenges from one page
+- **Build practical experience** by following the roadmap from the first page to the final project
+
+The website never keeps the task or challenge lists in its own HTML. It asks the backend API for them with `fetch()`, shows a loading message while waiting, and shows an error message if the backend cannot be reached.
+
+## Technologies used
+
+- HTML5
+- CSS3 (responsive layout, light and dark mode)
+- JavaScript (plain, no frameworks) with `fetch()`
+- Node.js
+- Express.js
+- REST API
+- JSON data files
+
+## Main features
+
+- Professional homepage that introduces the platform, with Dashboard and Challenges links
+- Intern Dashboard: intern name, track, internship status, total / completed / remaining tasks, progress percentage and progress bar
+- Tasks 1 to 8 loaded from the API, each with number, title, description, status and **View Task**
+- **View Task** opens a window with extra details, loaded from `GET /api/tasks/:id`, without a page refresh
+- **Start Task**, **Mark as Completed** and **Undo** buttons that update the backend and then the dashboard
+- Task filters: All, Completed, In Progress, Not Started
+- Challenge Hub with 8 challenges (4 Data Analytics, 4 Web Development), each with title, track, difficulty, description, expected outcome and **View Challenge**; filters by track and difficulty plus a name search
+- Search page that finds tasks and challenges together, highlights the matches and shows "No matching results found." when nothing matches
+- Backend Status indicator (Connected / Offline), checked every 5 seconds
+- Loading and error states on the dashboard, Challenge Hub and search page, with a **Try again** button
+- Dark mode switch that remembers your choice (localStorage)
+- Responsive design for desktop, tablet and mobile
+
+## How to run the project
+
+You need [Node.js](https://nodejs.org/) installed.
 
 ```bash
 cd backend
@@ -32,9 +52,50 @@ npm install
 npm start
 ```
 
-Then open **http://localhost:3000/dashboard.html**.
+(`npm start` runs `node server.js`, so `node server.js` works too.)
 
-The Express server also serves the website files, so the dashboard and the API share one address. If you open the dashboard another way (for example VS Code Live Server), it still finds the API at `http://localhost:3000`.
+Then open **http://localhost:3000** in your browser.
+
+| Page | Address |
+| ---- | ------- |
+| Home | http://localhost:3000/index.html |
+| Dashboard | http://localhost:3000/dashboard.html |
+| Challenge Hub | http://localhost:3000/challenges.html |
+| Search | http://localhost:3000/search.html |
+
+The Express server serves both the website and the API, so they share one address. If you open the pages another way (for example VS Code Live Server), they still find the API at `http://localhost:3000`, so keep the backend running.
+
+## Project structure
+
+```
+/                          the website (open through the backend)
+├── index.html             homepage
+├── dashboard.html         Intern Dashboard (progress + task management)
+├── challenges.html        Challenge Hub
+├── search.html            search tasks and challenges
+├── programs.html, internship-tasks.html, roadmap.html   information pages
+├── style.css              shared styles (colours, header, footer, buttons, loading/error boxes)
+├── dashboard.css, challenges.css, roadmap.css, search.css   page styles
+├── api.js                 shared helper: where the API is and how to call it
+├── dashboard.js           dashboard logic (fetch tasks, view, update, filters, progress)
+├── challenges.js          Challenge Hub logic (fetch challenges, filters, details)
+├── search.js              search page logic
+├── theme.js               light / dark mode
+├── images/                logo and favicon
+├── render.yaml            optional deployment config (see Deployment)
+└── backend/
+    ├── server.js          starts Express, mounts the routes, serves the website
+    ├── store.js           loads the JSON data and keeps it in memory
+    ├── routes/
+    │   ├── tasks.js       /api/tasks
+    │   ├── challenges.js  /api/challenges
+    │   └── search.js      /api/search
+    ├── data/
+    │   ├── tasks.json     the 8 internship tasks
+    │   └── challenges.json  the 8 challenges
+    ├── package.json
+    └── package-lock.json
+```
 
 ## API documentation
 
@@ -45,65 +106,37 @@ Base URL: `http://localhost:3000`
 | GET | `/api/tasks` | Get all tasks |
 | GET | `/api/tasks/:id` | Get one task |
 | PUT | `/api/tasks/:id` | Update a task's status |
-| GET | `/api/health` | Check the backend is running (used by "Backend Status") |
-| POST | `/api/tasks/reset` | Put every task back to its starting status (used by "Reset progress") |
+| POST | `/api/tasks/reset` | Put every task back to its starting status |
+| GET | `/api/challenges` | Get all challenges (optional `?track=` and `?difficulty=`) |
+| GET | `/api/challenges/:id` | Get one challenge |
+| GET | `/api/search?q=term` | Search tasks and challenges |
+| GET | `/api/health` | Check the backend is running |
 
-### GET /api/tasks
-Returns every task as a JSON array. The dashboard uses it to build the task cards, the progress bar and the filters.
+**PUT /api/tasks/:id** expects `{ "status": "completed" }` (also `in-progress` or `not-started`) and answers with the updated task. When the completed task was the only one in progress, the next task that has not started becomes *in progress* and is returned as `promoted`. An invalid status returns `400`, an unknown id returns `404`.
 
-### GET /api/tasks/:id
-Returns one task, for example `GET /api/tasks/3` returns Task 3. If the task does not exist the server answers `404` with `{ "error": "Task 99 was not found." }`. The **View Task** button uses this endpoint to fill the task window.
-
-### PUT /api/tasks/:id
-Updates the status of one task. Send JSON:
-
-```json
-{ "status": "completed" }
-```
-
-Valid statuses are `completed`, `in-progress` and `not-started`. The response is:
-
-```json
-{ "message": "Task 7 updated.", "task": { "id": 7, "status": "completed" }, "promoted": { "id": 8, "status": "in-progress" } }
-```
-
-`promoted` is the next task that moved to *in progress* automatically when the completed task was the only one in progress (otherwise it is `null`). An invalid status returns `400`, an unknown id returns `404`. The **Mark as Completed** button uses this endpoint, then the dashboard updates the progress count and percentage.
-
-### Task object
-
-```json
-{
-  "id": 1,
-  "title": "Build the TechBridge Homepage",
-  "description": "Create the first version of the TechBridge website using HTML and CSS.",
-  "status": "completed",
-  "day": "Day 1",
-  "page": "index.html",
-  "objective": "...",
-  "tech": "HTML5, CSS3",
-  "time": "3 to 4 hours",
-  "builds": "...",
-  "deliverable": "..."
-}
-```
-
-## How the dashboard uses the API
-
-- **Loading state:** "Loading tasks..." is shown while the request is on its way.
-- **Error state:** if the backend cannot be reached, the dashboard shows "Unable to load tasks. Please check your connection or try again." with a **Try again** button. It also retries by itself when the backend comes back.
-- **Backend Status:** the hero shows *Connected* or *Offline*, checked every 5 seconds.
-- **Filters:** All, Completed, In Progress and Not Started filter the tasks received from the API.
-
-## Notes
-
-Task data is kept **in memory**. Changing a status updates the running server, and restarting the server loads `data/tasks.json` again (a fresh start). Storing the data in a database is the optional challenge.
+**GET /api/search?q=javascript** returns `{ "query": "javascript", "tasks": [...], "challenges": [...] }`. Every word typed must appear in the item (title, description, tools, skills and so on), ignoring upper and lower case.
 
 ## Testing checklist
 
-1. Open the dashboard: the tasks load.
-2. Stop the backend and refresh: the error message appears.
-3. Start the backend again: the dashboard recovers.
-4. Click **View Task**: the correct task opens.
-5. Click **Mark as Completed**: the status changes.
-6. The progress count and percentage update.
-7. The filters still work.
+- [x] Homepage works and navigation works
+- [x] Dashboard loads and Tasks 1 to 8 appear
+- [x] API returns tasks, challenges and search results
+- [x] View Task shows the correct task
+- [x] Task status can be updated and the count, percentage and progress bar change
+- [x] Challenge Hub works and the track and difficulty filters work
+- [x] Search works and shows a message when nothing matches
+- [x] Loading state shows while data is on its way
+- [x] Error state shows when the backend is stopped, and the page recovers when it is started again
+- [x] Works on mobile, tablet and desktop
+- [x] No console errors
+
+## Notes
+
+Task status changes are kept **in memory**. They update the running server straight away, and restarting the server loads `backend/data/tasks.json` again. **Reset progress** on the dashboard does the same without a restart. Storing the data in a database is a possible next step.
+
+## Deployment
+
+The website is static, but the dashboard, Challenge Hub and search need the backend, so the backend must be hosted too.
+
+- **One service (simplest):** deploy the repository as a Node web service, for example on [Render](https://render.com). `render.yaml` is included: it runs `npm install` and `npm start` inside `backend/`, and Express serves the website and the API from one address.
+- **Website and API on different hosts** (for example Netlify and Render): deploy the API, then put its address in `PRODUCTION_API` at the top of `api.js`, for example `"https://your-api.onrender.com"`.
