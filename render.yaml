@@ -1,0 +1,10 @@
+# Optional: deploy the whole platform (website + API) as one Node service on Render.
+# The Express server in /backend also serves the website files, so one service is enough.
+services:
+  - type: web
+    name: techbridge-platform
+    runtime: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    plan: free
