@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>TechBridge | Bridging Learning to Real-World Experience</title>
-  <meta name="description" content="TechBridge by Baselink Services Limited offers a 30-day practical internship in Data Analytics and Web Development.">
+  <title>Intern Dashboard | TechBridge</title>
+  <meta name="description" content="Track your TechBridge internship progress, view all 8 tasks, filter by status, explore modern web technologies and jump to the Challenge Hub.">
   <link rel="icon" type="image/png" href="images/favicon.png">
-  <meta property="og:title" content="TechBridge | Bridging Learning to Real-World Experience">
-  <meta property="og:description" content="30-day practical internship in Data Analytics and Web Development.">
+  <meta property="og:title" content="Intern Dashboard | TechBridge">
+  <meta property="og:description" content="Your TechBridge internship in one place: progress, tasks, challenges and modern web technologies.">
   <meta property="og:image" content="images/techbridge-logo.png">
   <meta name="theme-color" content="#0d004d">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,20 +15,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
   <script>document.documentElement.classList.add('js');try{var t=localStorage.getItem('tb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a href="#top" class="brand"><img src="images/techbridge-logo.png" alt="TechBridge logo" width="558" height="115"></a>
+      <a href="index.html" class="brand"><img src="images/techbridge-logo.png" alt="TechBridge logo" width="558" height="115"></a>
       <nav aria-label="Main navigation">
-        <a href="#about">About</a>
+        <a href="index.html#about">About</a>
         <a href="programs.html">Programs</a>
         <a href="internship-tasks.html">Internship Tasks</a>
         <a href="roadmap.html">Internship Roadmap</a>
         <a href="challenges.html">Challenge Hub</a>
-        <a href="#internship">Internship</a>
-        <a href="#community">Community</a>
+        <a href="dashboard.html" aria-current="page">Dashboard</a>
         <a href="#contact">Contact</a>
       </nav>
       <button class="theme-toggle" type="button" aria-pressed="false" aria-label="Switch to dark mode">
@@ -41,86 +41,133 @@
 
   <main id="top">
 
-    <section class="hero">
+    <!-- A. Welcome -->
+    <section class="page-hero dash-hero" aria-labelledby="welcome-title">
       <div class="wrap">
-        <p class="org">TechBridge by Baselink Services Limited</p>
-        <h1>Bridging Learning to Real-World Experience</h1>
-        <p class="lead">TechBridge runs a 30-day practical internship for learners who want to move beyond theory and build real skills in Data Analytics and Web Development.</p>
-        <div class="actions">
-          <a class="btn btn-green" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Apply for the internship</a>
-          <a class="btn btn-outline" href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener">Join the WhatsApp community</a>
-        </div>
-        <div class="bridge" aria-hidden="true">
-          <span>Learning</span>
-          <svg viewBox="0 0 600 60" preserveAspectRatio="none">
-            <path class="trace" d="M8 30 H200 V10 H320 V50 H430 V30 H592" />
-            <circle cx="8" cy="30" r="6" />
-            <circle cx="592" cy="30" r="6" class="end" />
-          </svg>
-          <span>Real-world experience</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="section">
-      <div class="wrap split">
-        <div>
-          <h2>What TechBridge is</h2>
-          <p>TechBridge is a learning and internship initiative from Baselink Services Limited. Its purpose is simple: help learners connect what they study with the practical work they will meet in the real world.</p>
-        </div>
-        <div>
-          <h2>Who it is for</h2>
-          <p>The programs are for learners and aspiring interns who want hands-on experience in Data Analytics or Web Development, whether you are just starting out or ready to put your skills to work.</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="programs" class="section tint">
-      <div class="wrap">
-        <h2>Programs available now</h2>
-        <p class="section-intro">Choose the track that fits your goals. Both are delivered through the 30-day practical internship.</p>
-        <div class="programs">
-          <article class="program dark">
-            <h3>Data Analytics</h3>
-            <p>Learn to work with data and turn it into useful insights through practical, project-based tasks.</p>
-          </article>
-          <article class="program light">
-            <h3>Web Development</h3>
-            <p>Learn to plan, build and style real web pages through hands-on projects.</p>
-          </article>
-        </div>
-        <p class="more"><a class="btn btn-outline" href="programs.html">Explore the programs</a></p>
-      </div>
-    </section>
-
-    <section id="internship" class="section">
-      <div class="wrap split">
-        <div>
-          <h2>The 30-day practical internship</h2>
-          <p>Instead of only reading about skills, you practise them. The internship is project-based, so you learn by building things you can be proud of.</p>
-          <p class="more"><a class="btn btn-outline" href="internship-tasks.html">See the 8 internship tasks</a></p>
-        </div>
-        <ul class="benefits">
-          <li><strong>Learn by doing.</strong> Practical tasks and projects replace passive lessons.</li>
-          <li><strong>Possible recommendation letter.</strong> Interns who participate successfully and perform well may receive a recommendation letter.</li>
-          <li><strong>Two tracks.</strong> Pick Data Analytics or Web Development.</li>
-          <li><strong>A community behind you.</strong> Connect with other learners on WhatsApp.</li>
+        <p class="org">Intern Dashboard</p>
+        <h1 id="welcome-title">Welcome back, <span id="intern-name">Alex</span></h1>
+        <p class="lead" id="welcome-msg">Here is your internship at a glance. Keep going, one task at a time.</p>
+        <ul class="hero-facts">
+          <li><span class="hf-label">Internship track</span><strong id="intern-track">Web Development Intern</strong></li>
+          <li><span class="hf-label">Internship status</span><strong id="intern-status"><span class="badge b-progress">In Progress</span></strong></li>
+          <li><span class="hf-label">Backend Status</span><strong id="api-status" aria-live="polite"><span class="badge b-checking">Checking...</span></strong></li>
         </ul>
       </div>
     </section>
 
-    <section id="community" class="cta">
+    <!-- B. Progress + current task -->
+    <section id="progress" class="section" aria-labelledby="progress-title">
+      <div class="wrap progress-layout">
+
+        <div class="panel-card">
+          <h2 id="progress-title">Internship Progress</h2>
+          <p class="big-count"><span id="done-count">0</span> / <span id="total-count">8</span> Tasks Completed</p>
+          <div class="bar" id="bar" role="progressbar" aria-labelledby="progress-title" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="bar-fill" id="bar-fill"></div>
+          </div>
+          <p class="bar-label"><strong id="pct">0%</strong> complete</p>
+          <dl class="stat-row">
+            <div><dt>Total tasks</dt><dd id="stat-total">8</dd></div>
+            <div><dt>Completed</dt><dd id="stat-done">0</dd></div>
+            <div><dt>Remaining</dt><dd id="stat-left">8</dd></div>
+          </dl>
+          <p class="celebrate" id="celebrate" hidden>All 8 tasks completed. Congratulations, you finished the TechBridge internship!</p>
+        </div>
+
+        <div class="panel-card current" id="current-card">
+          <h2>Current Task</h2>
+          <div id="current-body"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- C. Task tracker -->
+    <section id="tracker" class="section tint" aria-labelledby="tracker-title">
       <div class="wrap">
-        <h2>Ready to start?</h2>
-        <p>Send in your application, then join the community to meet other TechBridge learners.</p>
-        <div class="actions center">
-          <a class="btn btn-green" href="https://forms.gle/8EbdSy5ttGfLZfjv5" target="_blank" rel="noopener">Fill out the application form</a>
-          <a class="btn btn-white" href="https://chat.whatsapp.com/FqpBvYS4oaK32cXDxc8JIS" target="_blank" rel="noopener">Join the WhatsApp community</a>
+        <h2 id="tracker-title">Task Tracker</h2>
+        <p class="section-intro">All 8 internship tasks in one place. The tasks are loaded from the TechBridge API. Open a task for details, or mark it as completed and watch your progress update.</p>
+
+        <div class="tracker-top">
+          <div class="chips" role="group" aria-label="Filter tasks by status" id="status-filters">
+            <button type="button" class="chip active" data-value="All" aria-pressed="true">All <span class="chip-n" data-count="All"></span></button>
+            <button type="button" class="chip" data-value="Completed" aria-pressed="false">Completed <span class="chip-n" data-count="Completed"></span></button>
+            <button type="button" class="chip" data-value="In Progress" aria-pressed="false">In Progress <span class="chip-n" data-count="In Progress"></span></button>
+            <button type="button" class="chip" data-value="Not Started" aria-pressed="false">Not Started <span class="chip-n" data-count="Not Started"></span></button>
+          </div>
+          <button type="button" class="reset" id="reset-progress">Reset progress</button>
+        </div>
+
+        <p class="results-line" id="results-line" aria-live="polite"></p>
+
+        <div class="state-box" id="task-state" role="status" aria-live="polite">
+          <span class="spinner" aria-hidden="true"></span>
+          <p class="state-title">Loading tasks...</p>
+        </div>
+
+        <div class="task-grid" id="task-grid"></div>
+
+        <div class="empty" id="task-empty" hidden>
+          <h3>No tasks here</h3>
+          <p>No tasks match this filter right now.</p>
+          <button type="button" class="btn btn-outline" id="show-all">Show all tasks</button>
+        </div>
+
+        <noscript><p>Please enable JavaScript to use the task tracker.</p></noscript>
+      </div>
+    </section>
+
+    <!-- D. Challenge Hub link (Task 5) -->
+    <section id="hub" class="section" aria-labelledby="hub-title">
+      <div class="wrap">
+        <div class="hub-card">
+          <div>
+            <p class="org">Task 5</p>
+            <h2 id="hub-title">Challenge Hub</h2>
+            <p class="hub-count"><strong>8 Challenges Available</strong> across Data Analytics and Web Development</p>
+            <p>Practise what you have learned with hands-on challenges. Filter by track and difficulty, then open any challenge to see what you would build.</p>
+          </div>
+          <div class="actions">
+            <a class="btn btn-green" href="challenges.html">Explore Challenges</a>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- E. Modern web technologies -->
+    <section id="tech" class="section tint" aria-labelledby="tech-title">
+      <div class="wrap">
+        <h2 id="tech-title">Modern Web Technologies</h2>
+        <p class="section-intro">A complete web platform is built from several layers. Pick a technology to see what it is and what it is used for.</p>
+
+        <div class="tech-tabs" role="tablist" aria-label="Technology explorer" id="tech-tabs">
+          <button type="button" role="tab" class="chip active" id="tab-next" aria-controls="tech-panel" aria-selected="true" data-key="next">Next.js</button>
+          <button type="button" role="tab" class="chip" id="tab-vue" aria-controls="tech-panel" aria-selected="false" tabindex="-1" data-key="vue">Vue.js</button>
+          <button type="button" role="tab" class="chip" id="tab-angular" aria-controls="tech-panel" aria-selected="false" tabindex="-1" data-key="angular">Angular</button>
+          <button type="button" role="tab" class="chip" id="tab-backend" aria-controls="tech-panel" aria-selected="false" tabindex="-1" data-key="backend">Backend</button>
+        </div>
+
+        <div class="tech-panel" id="tech-panel" role="tabpanel" aria-labelledby="tab-next" tabindex="0"></div>
+
+        <noscript><p>Please enable JavaScript to use the technology explorer.</p></noscript>
+      </div>
+    </section>
+
   </main>
+
+  <!-- Task details -->
+  <dialog id="modal" class="modal" aria-labelledby="m-title">
+    <div class="modal-box">
+      <button type="button" class="modal-close" id="m-close" aria-label="Close task details">&times;</button>
+      <p class="m-tags" id="m-tags"></p>
+      <h2 id="m-title"></h2>
+      <p class="m-lead" id="m-lead"></p>
+      <dl class="m-facts" id="m-facts"></dl>
+      <div class="m-actions" id="m-actions"></div>
+    </div>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <footer id="contact" class="site-footer">
     <div class="wrap footer-inner">
@@ -142,5 +189,6 @@
   </footer>
 
   <script src="theme.js" defer></script>
+  <script src="dashboard.js" defer></script>
 </body>
 </html>
