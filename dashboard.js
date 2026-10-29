@@ -1,4 +1,4 @@
-/* TechBridge Task 7: Intern Dashboard connected to the Task Management API
+/* TechBridge Task 7 + 8: Intern Dashboard connected to the Task Management API
    Builds on the Task 6 dashboard. Plain JavaScript only (no frameworks).
    The tasks are no longer written in this file: they are requested from the
    backend with fetch(). See backend/server.js. */
@@ -9,10 +9,7 @@ var intern = {
   track: "Web Development Intern"
 };
 
-// Where the API lives.
-// - Opened through the Express server (http://localhost:3000): same origin, so "".
-// - Opened any other way (Live Server, file://): call the local API directly.
-// To point the dashboard at another server, set window.TB_API_BASE before this script.
+// Where the API lives is decided once in api.js (window.TB_API_BASE).
 var API_BASE = typeof window.TB_API_BASE === "string"
   ? window.TB_API_BASE
   : (window.location.port === "3000" ? "" : "http://localhost:3000");
@@ -279,7 +276,7 @@ function renderState() {
     box.className = "state-box state-error";
     box.innerHTML =
       '<h3>Unable to load tasks.</h3>' +
-      "<p>Please check your connection or try again.</p>" +
+      "<p>Please try again.</p>" +
       '<p class="state-hint">Is the backend running? Start it with <code>npm start</code> inside the backend folder.</p>' +
       '<button type="button" class="btn btn-outline" id="retry-load">Try again</button>';
   }
@@ -306,6 +303,9 @@ function renderTasks() {
     if (t.status === "Completed") {
       buttons += '<button type="button" class="btn btn-link" data-action="undo" data-id="' + t.id + '">Undo</button>';
     } else {
+      if (t.status === "Not Started") {
+        buttons += '<button type="button" class="btn btn-outline" data-action="start" data-id="' + t.id + '">Start Task</button>';
+      }
       buttons += '<button type="button" class="btn btn-green" data-action="complete" data-id="' + t.id + '">Mark as Completed</button>';
     }
 
@@ -342,11 +342,22 @@ function loadTasks() {
     tasks = data.map(fromApi);
     loadState = "ready";
     renderAll();
+    openFromAddress();
   }).catch(function () {
     tasks = [];
     loadState = "error";
     renderAll();
   });
+}
+
+// Links from the search page look like dashboard.html?open=3: open that task once.
+var openedFromAddress = false;
+function openFromAddress() {
+  if (openedFromAddress) { return; }
+  openedFromAddress = true;
+  var id = null;
+  try { id = Number(new URLSearchParams(window.location.search).get("open")); } catch (e) { /* ignore */ }
+  if (id && byId(id)) { openTask(id, null); }
 }
 
 // 7. ACTIONS ------------------------------------------------------------
@@ -402,6 +413,13 @@ function startTask(id) {
   return updateStatus(id, "In Progress").then(renderAll);
 }
 
+// "Start Task" on a card: Not Started -> In Progress
+function startFromCard(id) {
+  startTask(id).then(function () {
+    showToast("Task " + id + " is now in progress.");
+  }).catch(function () { updateFailed(id); });
+}
+
 function markDone(id) {
   var card = document.querySelector('.t-card[data-id="' + id + '"]');
   if (!card) { return; }
@@ -454,7 +472,7 @@ function openTask(id, trigger) {
     $("m-title").textContent = "Unable to load this task.";
     $("m-lead").textContent = err.status === 404
       ? "This task could not be found."
-      : "Please check your connection or try again.";
+      : "Please try again.";
   });
 }
 
@@ -531,6 +549,7 @@ $("task-grid").addEventListener("click", function (e) {
   if (action === "view") { openTask(id, btn); }
   if (action === "complete") { lockButton(btn, "Updating..."); completeTask(id); }
   if (action === "undo") { lockButton(btn, "Updating..."); undoTask(id); }
+  if (action === "start") { lockButton(btn, "Updating..."); startFromCard(id); }
 });
 
 $("current-body").addEventListener("click", function (e) {
