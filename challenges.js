@@ -1,73 +1,11 @@
-/* TechBridge Task 5: Challenge Hub
-   Plain JavaScript only (no frameworks). */
+/* TechBridge Task 5 + 8: Challenge Hub
+   Plain JavaScript only (no frameworks).
+   Task 8: the challenges are loaded from the backend API. */
 
-// 1. DATA: every challenge is an object in one array
-var challenges = [
-  { id: 1, title: "Monthly Sales Dashboard", track: "Data Analytics", difficulty: "Beginner",
-    description: "Analyze a small retail sales dataset and find out which products and months perform best.",
-    outcome: "A one-page dashboard showing monthly sales performance.",
-    objective: "Clean a small sales dataset and turn it into charts that show trends in revenue by product and by month.",
-    skills: "Data cleaning, formulas, Pivot Tables, basic charts",
-    tools: "Google Sheets or Excel",
-    produce: "A cleaned dataset, a Pivot Table summary and a dashboard with at least three charts.",
-    time: "3 to 4 hours" },
-  { id: 2, title: "Customer Churn Analysis", track: "Data Analytics", difficulty: "Intermediate",
-    description: "Explore customer records to discover who is leaving a subscription service, and why.",
-    outcome: "A short report with the main churn drivers and two recommendations.",
-    objective: "Calculate the churn rate, compare it across customer groups and recommend ways to keep more customers.",
-    skills: "SQL queries, GROUP BY and aggregates, data comparison, writing insights",
-    tools: "SQL (SQLite or MySQL), Google Sheets or Excel",
-    produce: "The queries you wrote, a summary table of churn by segment and a one-page findings report.",
-    time: "5 to 6 hours" },
-  { id: 3, title: "Company Expense Analysis", track: "Data Analytics", difficulty: "Beginner",
-    description: "Review a year of company expenses and spot where the money is going.",
-    outcome: "A summary sheet that ranks spending categories and highlights unusual costs.",
-    objective: "Organize raw expense records, group them by category and flag anything that looks unusually high.",
-    skills: "Sorting and filtering, SUMIF formulas, Pivot Tables, conditional formatting",
-    tools: "Google Sheets or Excel",
-    produce: "A tidy expense sheet, a category summary and a short list of three cost-saving observations.",
-    time: "2 to 3 hours" },
-  { id: 4, title: "Employee Data Business Dashboard", track: "Data Analytics", difficulty: "Advanced",
-    description: "Combine several related tables into an interactive dashboard for a fictional HR team.",
-    outcome: "A multi-table analysis and a dashboard that answers five HR questions.",
-    objective: "Join employee, department and salary tables, then build a dashboard that answers questions about headcount, pay and turnover.",
-    skills: "SQL joins, lookup functions, data wrangling, dashboard design, storytelling with data",
-    tools: "SQL, Excel or Google Sheets (Power BI or Looker Studio optional)",
-    produce: "A merged dataset, the SQL used, a dashboard and a short summary for non-technical readers.",
-    time: "8 to 10 hours" },
-  { id: 5, title: "Responsive Landing Page", track: "Web Development", difficulty: "Beginner",
-    description: "Build a clean landing page for a made-up product that looks good on any screen.",
-    outcome: "A live, responsive one-page website.",
-    objective: "Design and code a landing page with a hero section, features, and a call-to-action that adapts to phones, tablets and desktops.",
-    skills: "Semantic HTML, CSS Flexbox or Grid, media queries",
-    tools: "HTML, CSS, a code editor, GitHub and Netlify",
-    produce: "A GitHub repository and a live website link that works on mobile and desktop.",
-    time: "3 to 4 hours" },
-  { id: 6, title: "Contact Form with Validation", track: "Web Development", difficulty: "Intermediate",
-    description: "Create a contact form that checks the visitor's input and shows helpful messages.",
-    outcome: "A working form that blocks bad input and confirms success.",
-    objective: "Build a form with name, email and message fields, validate them with JavaScript and give clear feedback without reloading the page.",
-    skills: "HTML forms, JavaScript events, DOM manipulation, accessible error messages",
-    tools: "HTML, CSS, JavaScript",
-    produce: "A form page with validation, error and success messages, and the code on GitHub.",
-    time: "4 to 5 hours" },
-  { id: 7, title: "Personal Portfolio Website", track: "Web Development", difficulty: "Beginner",
-    description: "Present yourself, your skills and your projects in a simple multi-section portfolio.",
-    outcome: "A live portfolio you can share with employers.",
-    objective: "Plan and build a portfolio with an about section, projects, skills and contact details in a consistent design.",
-    skills: "HTML structure, CSS styling, layout and spacing, basic design sense",
-    tools: "HTML, CSS, GitHub, Netlify",
-    produce: "A live portfolio link and a GitHub repository with organized files.",
-    time: "4 to 5 hours" },
-  { id: 8, title: "Interactive Product Store", track: "Web Development", difficulty: "Advanced",
-    description: "Build a small online store front where visitors can search, filter and add items to a cart.",
-    outcome: "A working shopping experience that remembers the cart.",
-    objective: "Create a product grid with search and filters, a product details view and a cart with totals that survives a page reload.",
-    skills: "JavaScript arrays and objects, DOM updates, localStorage, responsive layout, code organization",
-    tools: "HTML, CSS, JavaScript, GitHub, Netlify",
-    produce: "A live store, a clean repository and a short README explaining how it works.",
-    time: "8 to 10 hours" }
-];
+// 1. DATA
+// The challenges now come from the API (GET /api/challenges), not from this file.
+var challenges = [];
+var loadState = "loading";   // "loading" | "ready" | "error"
 
 // 2. STATE: the currently selected filters
 var filters = { track: "All", difficulty: "All", search: "" };
@@ -78,6 +16,7 @@ var countEl = document.getElementById("count");
 var emptyEl = document.getElementById("empty");
 var resetBtn = document.getElementById("reset");
 var emptyResetBtn = document.getElementById("empty-reset");
+var stateEl = document.getElementById("ch-state");
 var searchEl = document.getElementById("search");
 var modal = document.getElementById("modal");
 var lastOpener = null;
@@ -125,7 +64,29 @@ function isFiltered() {
 }
 
 // 4. RENDER: draw the cards, the count and the "no results" message
+function renderState() {
+  if (loadState === "ready") { stateEl.hidden = true; stateEl.innerHTML = ""; return; }
+  stateEl.hidden = false;
+  if (loadState === "loading") {
+    stateEl.className = "state-box";
+    stateEl.innerHTML = '<span class="spinner" aria-hidden="true"></span><p class="state-title">Loading challenges...</p>';
+  } else {
+    stateEl.className = "state-box state-error";
+    stateEl.innerHTML = "<h3>Unable to load challenges.</h3><p>Please try again.</p>" +
+      '<p class="state-hint">Is the backend running? Start it with <code>npm start</code> inside the backend folder.</p>' +
+      '<button type="button" class="btn btn-outline" id="ch-retry">Try again</button>';
+  }
+}
+
 function render() {
+  renderState();
+  if (loadState !== "ready") {
+    cardsEl.innerHTML = "";
+    emptyEl.hidden = true;
+    resetBtn.hidden = true;
+    countEl.textContent = loadState === "loading" ? "Loading challenges..." : "Challenges unavailable";
+    return;
+  }
   var list = getVisible();
   var html = "";
   list.forEach(function (c) {
@@ -239,4 +200,27 @@ modal.addEventListener("close", function () {
   if (lastOpener && document.body.contains(lastOpener)) { lastOpener.focus(); }
 });
 
-render();
+// 7. LOAD FROM THE API (GET /api/challenges) ----------------------------
+function loadChallenges() {
+  loadState = "loading";
+  render();
+  return window.tbRequest("/api/challenges").then(function (data) {
+    challenges = data;
+    loadState = "ready";
+    render();
+    // Links from the search page look like challenges.html?open=5
+    var wanted = null;
+    try { wanted = Number(new URLSearchParams(window.location.search).get("open")); } catch (e) { /* ignore */ }
+    if (wanted) { lastOpener = null; openChallenge(wanted); }
+  }).catch(function () {
+    challenges = [];
+    loadState = "error";
+    render();
+  });
+}
+
+stateEl.addEventListener("click", function (e) {
+  if (e.target.closest("#ch-retry")) { loadChallenges(); }
+});
+
+loadChallenges();
